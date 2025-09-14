@@ -11,13 +11,15 @@ export const TableOpportunities = () => {
       {emptyList ? (
         <div className='text-gray-500'>No opportunities yet.</div>
       ) : (
-        <table className='min-w-full border'>
+        <table className='min-w-full border table-fixed'>
           <thead>
             <tr className='bg-gray-100'>
-              <th className='p-2 border'>Name</th>
-              <th className='p-2 border'>Stage</th>
-              <th className='p-2 border'>Amount</th>
-              <th className='p-2 border'>Account Name</th>
+              <th className='p-2 border w-[160px] min-w-[120px]'>Name</th>
+              <th className='p-2 border w-[120px] min-w-[100px]'>Stage</th>
+              <th className='p-2 border w-[120px] min-w-[100px]'>Amount</th>
+              <th className='p-2 border w-[200px] min-w-[140px]'>
+                Account Name
+              </th>
             </tr>
           </thead>
           <tbody>

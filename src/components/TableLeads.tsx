@@ -1,6 +1,7 @@
 import { useState } from 'react'
-import { useLeadsContext } from '../context/LeadsContext'
+
 import { useLeadEditorContext } from '../context/LeadEditorContext'
+import { useLeadsContext } from '../context/LeadsContext'
 
 export const TableLeads = () => {
   const { filteredLeads, loading, error } = useLeadsContext()
@@ -30,38 +31,40 @@ export const TableLeads = () => {
 
   return (
     <>
-      <table className='min-w-full border'>
-        <thead>
-          <tr className='bg-gray-100'>
-            <th className='p-2 border'>ID</th>
-            <th className='p-2 border'>Name</th>
-            <th className='p-2 border'>Company</th>
-            <th className='p-2 border'>Email</th>
-            <th className='p-2 border'>Source</th>
-            <th className='p-2 border'>Score</th>
-            <th className='p-2 border'>Status</th>
-          </tr>
-        </thead>
-        <tbody>
-          {paginatedLeads.map((lead) => (
-            <tr
-              key={lead.id}
-              className='hover:bg-gray-50 cursor-pointer'
-              onClick={() => openLeadPanel(lead)}
-            >
-              <td className='p-2 border'>{lead.id}</td>
-              <td className='p-2 border'>{lead.name}</td>
-              <td className='p-2 border'>{lead.company}</td>
-              <td className='p-2 border'>{lead.email}</td>
-              <td className='p-2 border'>{lead.source}</td>
-              <td className='p-2 border'>{lead.score}</td>
-              <td className='p-2 border'>{lead.status}</td>
+      <div className='w-full overflow-x-auto'>
+        <table className='min-w-full border table-fixed'>
+          <thead>
+            <tr className='bg-gray-100'>
+              <th className='p-2 border w-[80px] min-w-[60px]'>ID</th>
+              <th className='p-2 border w-[160px] min-w-[120px]'>Name</th>
+              <th className='p-2 border w-[160px] min-w-[120px]'>Company</th>
+              <th className='p-2 border w-[220px] min-w-[180px]'>Email</th>
+              <th className='p-2 border w-[120px] min-w-[100px]'>Source</th>
+              <th className='p-2 border w-[100px] min-w-[80px]'>Score</th>
+              <th className='p-2 border w-[120px] min-w-[100px]'>Status</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {paginatedLeads.map((lead) => (
+              <tr
+                key={lead.id}
+                className='hover:bg-gray-50 cursor-pointer'
+                onClick={() => openLeadPanel(lead)}
+              >
+                <td className='p-2 border'>{lead.id}</td>
+                <td className='p-2 border truncate whitespace-nowrap overflow-hidden'>{lead.name}</td>
+                <td className='p-2 border truncate whitespace-nowrap overflow-hidden'>{lead.company}</td>
+                <td className='p-2 border truncate whitespace-nowrap overflow-hidden'>{lead.email}</td>
+                <td className='p-2 border'>{lead.source}</td>
+                <td className='p-2 border'>{lead.score}</td>
+                <td className='p-2 border'>{lead.status}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
 
-      <div className='flex justify-center items-center gap-2 mt-4'>
+      <div className='flex justify-center items-center gap-2 mt-4 '>
         <button
           className='px-3 py-1 rounded border bg-gray-100 disabled:opacity-50'
           onClick={() => setPage((prevState) => Math.max(1, prevState - 1))}

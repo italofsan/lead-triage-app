@@ -6,10 +6,10 @@ export const Search = () => {
   return (
     <input
       type='text'
-      placeholder='Search name/company...'
+      placeholder='Search leads...'
       value={search}
       onChange={(e) => setSearch(e.target.value)}
-      className='border px-2 py-1 rounded'
+      className='px-4 py-2 rounded-xl shadow bg-white border border-gray-200 focus:border-gray-400 focus:ring-2 focus:ring-gray-100 w-56 transition-all duration-200'
     />
   )
 }

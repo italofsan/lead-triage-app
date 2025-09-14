@@ -8,7 +8,7 @@ export const Filter = () => {
     <select
       value={statusFilter}
       onChange={(e) => setStatusFilter(e.target.value)}
-      className='border px-2 py-1 rounded'
+      className='px-4 py-2 rounded-xl shadow bg-white border border-gray-200 focus:border-gray-400 focus:ring-2 focus:ring-gray-100 transition-all duration-200'
     >
       <option value=''>All Status</option>
       {STATUS_OPTIONS.map((status) => (

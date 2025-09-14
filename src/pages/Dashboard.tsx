@@ -11,19 +11,27 @@ export const Dashboard = () => {
   const { selectedLead } = useLeadEditorContext()
 
   return (
-    <div className='p-4'>
-      <h1 className='text-2xl font-bold mb-4'>Leads</h1>
+    <div className='p-4 min-h-screen bg-gradient-to-br from-gray-50 to-gray-200'>
+      <div className='max-w-5xl mx-auto'>
+        <h1 className='text-3xl font-bold mb-6 text-gray-700 rounded-xl bg-white shadow px-6 py-4'>
+          Leads
+        </h1>
 
-      <div className='flex gap-2 mb-4'>
-        <Search />
-        <Filter />
-        <Sort />
+        <div className='flex gap-4 mb-6 rounded-xl bg-white shadow px-6 py-4'>
+          <Search />
+          <Filter />
+          <Sort />
+        </div>
+
+        <div className='mb-8'>
+          <TableLeads />
+        </div>
+        <div className='mb-8'>
+          <TableOpportunities />
+        </div>
+
+        {selectedLead ? <SlideOverPanel /> : null}
       </div>
-
-      <TableLeads />
-      <TableOpportunities />
-
-      {selectedLead ? <SlideOverPanel /> : null}
     </div>
   )
 }

@@ -12,10 +12,12 @@ export const SlideOverPanel = () => {
       onClick={closeLeadPanel}
     >
       <div
-        className='bg-white w-96 h-full shadow-2xl p-6 flex flex-col'
+        className='bg-white w-96 h-full shadow-2xl p-6 flex flex-col rounded-l-2xl overflow-y-auto border border-gray-200'
         onClick={(e) => e.stopPropagation()}
       >
-        <h2 className='text-xl font-bold mb-4'>Lead Details</h2>
+        <h2 className='text-xl font-bold mb-4 text-gray-700 rounded-xl bg-gray-100 shadow px-4 py-2'>
+          Lead Details
+        </h2>
         <LeadDetail />
         <hr className='my-4' />
         <LeadConvert />

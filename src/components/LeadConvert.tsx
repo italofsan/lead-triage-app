@@ -26,7 +26,7 @@ export const LeadConvert = () => {
         <select
           value={oppStage}
           onChange={(e) => setOppStage(e.target.value)}
-          className='border px-2 py-1 rounded w-full'
+          className='border border-gray-200 bg-gray-50 px-3 py-2 rounded-lg w-full shadow-sm focus:outline-none focus:ring-2 focus:ring-gray-200 disabled:opacity-50 transition duration-150'
         >
           {STAGE_OPTIONS.map((stage) => (
             <option key={stage} value={stage}>
@@ -41,14 +41,14 @@ export const LeadConvert = () => {
           type='number'
           value={oppAmount}
           onChange={(e) => setOppAmount(e.target.value)}
-          className='border px-2 py-1 rounded w-full'
+          className='border border-gray-200 bg-gray-50 px-3 py-2 rounded-lg w-full shadow-sm focus:outline-none focus:ring-2 focus:ring-gray-200 disabled:opacity-50 transition duration-150'
           min='0'
         />
       </div>
       {oppError ? <ErrorText textError={oppError} /> : null}
 
       <button
-        className={`bg-green-500 text-white px-4 py-2 rounded mt-2 ${
+        className={`bg-green-600 text-white px-4 py-2 rounded-lg mt-2 shadow-sm hover:bg-green-700 transition duration-150 disabled:opacity-50 ${
           loading ? '' : 'cursor-pointer'
         }`}
         onClick={() =>

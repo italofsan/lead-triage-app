@@ -42,7 +42,7 @@ export const LeadDetail = () => {
           type='email'
           value={editEmail}
           onChange={(e) => setEditEmail(e.target.value)}
-          className='border px-2 py-1 rounded w-full mt-1'
+          className='border border-gray-200 bg-gray-50 px-3 py-2 rounded-lg w-full mt-1 shadow-sm focus:outline-none focus:ring-2 focus:ring-gray-200 disabled:opacity-50 transition duration-150'
           disabled={loading}
         />
       </div>
@@ -55,7 +55,7 @@ export const LeadDetail = () => {
           id='lead-status'
           value={editStatus}
           onChange={(e) => setEditStatus(e.target.value)}
-          className='border px-2 py-1 rounded w-full mt-1'
+          className='border border-gray-200 bg-gray-50 px-3 py-2 rounded-lg w-full mt-1 shadow-sm focus:outline-none focus:ring-2 focus:ring-gray-200 disabled:opacity-50 transition duration-150'
           disabled={loading}
         >
           {STATUS_OPTIONS.map((status) => (
@@ -83,7 +83,7 @@ export const LeadDetail = () => {
 
       <div className='flex gap-2 mt-4'>
         <button
-          className={`bg-blue-500 text-white px-4 py-2 rounded disabled:opacity-50 ${
+          className={`bg-green-600 text-white px-4 py-2 rounded-lg shadow-sm hover:bg-green-700 transition duration-150 disabled:opacity-50 ${
             loading ? '' : 'cursor-pointer'
           }`}
           onClick={() => handleSave(setLeads)}
@@ -92,7 +92,7 @@ export const LeadDetail = () => {
           {loading ? 'Saving...' : 'Save'}
         </button>
         <button
-          className='bg-gray-300 px-4 py-2 rounded cursor-pointer'
+          className='bg-gray-100 text-gray-700 px-4 py-2 rounded-lg shadow-sm hover:bg-gray-200 transition duration-150 cursor-pointer disabled:opacity-50'
           onClick={closeLeadPanel}
           disabled={loading}
         >

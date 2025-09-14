@@ -32,57 +32,71 @@ export const TableLeads = () => {
   return (
     <>
       <div className='w-full overflow-x-auto'>
-        <table className='min-w-full border table-fixed'>
+        <table className='min-w-full table-fixed rounded-xl shadow-lg overflow-hidden bg-gray-50'>
           <thead>
-            <tr className='bg-gray-100'>
-              <th className='p-2 border w-[80px] min-w-[60px]'>ID</th>
-              <th className='p-2 border w-[160px] min-w-[120px]'>Name</th>
-              <th className='p-2 border w-[160px] min-w-[120px]'>Company</th>
-              <th className='p-2 border w-[220px] min-w-[180px]'>Email</th>
-              <th className='p-2 border w-[120px] min-w-[100px]'>Source</th>
-              <th className='p-2 border w-[100px] min-w-[80px]'>Score</th>
-              <th className='p-2 border w-[120px] min-w-[100px]'>Status</th>
+            <tr className='rounded-t-xl'>
+              <th className='p-2 w-[80px] min-w-[60px] bg-gray-200 text-gray-700 font-semibold'>
+                ID
+              </th>
+              <th className='p-2 w-[160px] min-w-[120px] bg-gray-200 text-gray-700 font-semibold'>
+                Name
+              </th>
+              <th className='p-2 w-[160px] min-w-[120px] bg-gray-200 text-gray-700 font-semibold'>
+                Company
+              </th>
+              <th className='p-2 w-[220px] min-w-[180px] bg-gray-200 text-gray-700 font-semibold'>
+                Email
+              </th>
+              <th className='p-2 w-[120px] min-w-[100px] bg-gray-200 text-gray-700 font-semibold'>
+                Source
+              </th>
+              <th className='p-2 w-[100px] min-w-[80px] bg-gray-200 text-gray-700 font-semibold'>
+                Score
+              </th>
+              <th className='p-2 w-[120px] min-w-[100px] bg-gray-200 text-gray-700 font-semibold'>
+                Status
+              </th>
             </tr>
           </thead>
           <tbody>
             {paginatedLeads.map((lead) => (
               <tr
                 key={lead.id}
-                className='hover:bg-gray-50 cursor-pointer'
+                className='hover:bg-gray-100 cursor-pointer rounded-lg transition-colors border-b border-gray-200 align-middle'
                 onClick={() => openLeadPanel(lead)}
               >
-                <td className='p-2 border'>{lead.id}</td>
-                <td className='p-2 border truncate whitespace-nowrap overflow-hidden'>
+                <td className='py-4 px-2'>{lead.id}</td>
+                <td className='py-4 px-2 truncate whitespace-nowrap overflow-hidden'>
                   {lead.name}
                 </td>
-                <td className='p-2 border truncate whitespace-nowrap overflow-hidden'>
+                <td className='py-4 px-2 truncate whitespace-nowrap overflow-hidden'>
                   {lead.company}
                 </td>
-                <td className='p-2 border truncate whitespace-nowrap overflow-hidden'>
+                <td className='py-4 px-2 truncate whitespace-nowrap overflow-hidden'>
                   {lead.email}
                 </td>
-                <td className='p-2 border'>{lead.source}</td>
-                <td className='p-2 border'>{lead.score}</td>
-                <td className='p-2 border'>{lead.status}</td>
+                <td className='py-4 px-2'>{lead.source}</td>
+                <td className='py-4 px-2'>{lead.score}</td>
+                <td className='py-4 px-2'>{lead.status}</td>
               </tr>
             ))}
           </tbody>
         </table>
       </div>
 
-      <div className='flex justify-center items-center gap-2 mt-4 '>
+      <div className='flex justify-center items-center gap-4 mt-6'>
         <button
-          className='px-3 py-1 rounded border bg-gray-100 disabled:opacity-50 cursor-pointer disabled:cursor-default'
+          className='px-4 py-2 rounded-xl shadow bg-white border border-gray-200 text-gray-700 font-semibold disabled:opacity-50 cursor-pointer disabled:cursor-default transition-all duration-200 hover:bg-gray-100'
           onClick={() => setPage((prevState) => Math.max(1, prevState - 1))}
           disabled={page === 1}
         >
           Previous
         </button>
-        <span>
+        <span className='px-4 py-2 rounded-xl bg-gray-100 text-gray-700 font-medium shadow border border-gray-200'>
           Page {page} of {totalPages}
         </span>
         <button
-          className='px-3 py-1 rounded border bg-gray-100 disabled:opacity-50 cursor-pointer disabled:cursor-default'
+          className='px-4 py-2 rounded-xl shadow bg-white border border-gray-200 text-gray-700 font-semibold disabled:opacity-50 cursor-pointer disabled:cursor-default transition-all duration-200 hover:bg-gray-100'
           onClick={() =>
             setPage((prevState) => Math.min(totalPages, prevState + 1))
           }

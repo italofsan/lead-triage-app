@@ -29,6 +29,7 @@ export const TableLeads = ({
     <table className='min-w-full border'>
       <thead>
         <tr className='bg-gray-100'>
+          <th className='p-2 border'>ID</th>
           <th className='p-2 border'>Name</th>
           <th className='p-2 border'>Company</th>
           <th className='p-2 border'>Email</th>
@@ -44,6 +45,7 @@ export const TableLeads = ({
             className='hover:bg-gray-50 cursor-pointer'
             onClick={() => openLeadPanel(lead)}
           >
+            <td className='p-2 border'>{lead.id}</td>
             <td className='p-2 border'>{lead.name}</td>
             <td className='p-2 border'>{lead.company}</td>
             <td className='p-2 border'>{lead.email}</td>

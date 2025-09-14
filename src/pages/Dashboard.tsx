@@ -24,21 +24,24 @@ export const Dashboard = () => {
   const [oppStage, setOppStage] = useState(STAGE_OPTIONS[0])
   const [oppAmount, setOppAmount] = useState('')
   const [oppError, setOppError] = useState('')
+  const [sortBy, setSortBy] = useState<'id' | 'score'>('id')
 
   useEffect(() => {
-    fetch('/leads.json')
-      .then((res) => {
-        if (!res.ok) throw new Error('Failed to load leads')
-        return res.json()
-      })
-      .then((data) => {
-        setLeads(data)
-        setLoading(false)
-      })
-      .catch(() => {
-        setError('Error loading leads')
-        setLoading(false)
-      })
+    setTimeout(() => {
+      fetch('/leads.json')
+        .then((res) => {
+          if (!res.ok) throw new Error('Failed to load leads')
+          return res.json()
+        })
+        .then((data) => {
+          setLeads(data)
+          setLoading(false)
+        })
+        .catch(() => {
+          setError('Error loading leads')
+          setLoading(false)
+        })
+    }, 2000)
   }, [])
 
   useEffect(() => {
@@ -54,9 +57,13 @@ export const Dashboard = () => {
     if (statusFilter) {
       result = result.filter((lead) => lead.status === statusFilter)
     }
-    result = [...result].sort((a, b) => b.score - a.score)
+    if (sortBy === 'id') {
+      result = [...result].sort((a, b) => a.id - b.id)
+    } else {
+      result = [...result].sort((a, b) => b.score - a.score)
+    }
     setFilteredLeads(result)
-  }, [leads, search, statusFilter])
+  }, [leads, search, statusFilter, sortBy])
 
   // Open panel and set edit fields
   const openLeadPanel = (lead: Lead) => {
@@ -103,6 +110,17 @@ export const Dashboard = () => {
       <div className='flex gap-2 mb-4'>
         <Search search={search} setSearch={setSearch} />
         <Filter statusFilter={statusFilter} setStatusFilter={setStatusFilter} />
+        <div>
+          <label className='mr-2 font-medium'>Sort by:</label>
+          <select
+            value={sortBy}
+            onChange={(e) => setSortBy(e.target.value as 'id' | 'score')}
+            className='border rounded px-2 py-1'
+          >
+            <option value='id'>ID</option>
+            <option value='score'>Score (desc)</option>
+          </select>
+        </div>
       </div>
 
       <TableLeads
@@ -133,6 +151,7 @@ export const Dashboard = () => {
           setOppError={setOppError}
           setOpportunities={setOpportunities}
           setSelectedLead={setSelectedLead}
+          setLeads={setLeads}
         />
       ) : null}
     </div>

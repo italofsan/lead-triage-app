@@ -1,10 +1,12 @@
 import { STAGE_OPTIONS, STATUS_OPTIONS } from '../utils/consts'
 import type { Lead, Opportunity } from '../types'
 import { ErrorText } from './ErrorText'
+import { useState } from 'react'
 
 type SlideOverPanelProps = {
   selectedLead: Lead | null
   setSelectedLead: (value: React.SetStateAction<any>) => void
+  setLeads: React.Dispatch<React.SetStateAction<Lead[]>>
   editEmail: string
   setEditEmail: (value: React.SetStateAction<string>) => void
   editStatus: string
@@ -25,6 +27,7 @@ type SlideOverPanelProps = {
 export const SlideOverPanel = ({
   setSelectedLead,
   selectedLead,
+  setLeads,
   editEmail,
   editError,
   editStatus,
@@ -41,6 +44,39 @@ export const SlideOverPanel = ({
   setOppStage,
   setOpportunities,
 }: SlideOverPanelProps) => {
+  const [loading, setLoading] = useState(false)
+
+  function handleConvertLead() {
+    setLoading(true)
+
+    setTimeout(() => {
+      setOppError('')
+      if (!selectedLead) return
+      // Validate amount
+      if (oppAmount && isNaN(Number(oppAmount))) {
+        setOppError('Amount must be a number')
+        return
+      }
+      // Create opportunity
+      setOpportunities((prev) => [
+        ...prev,
+        {
+          id: Date.now(),
+          name: selectedLead?.name,
+          stage: oppStage,
+          amount: oppAmount ? Number(oppAmount) : undefined,
+          accountName: selectedLead?.company,
+        },
+      ])
+      // Remove lead from list
+      setLeads((prev) => prev.filter((l) => l.id !== selectedLead?.id))
+      setSelectedLead(null)
+      setOppAmount('')
+      setOppStage(STAGE_OPTIONS[0])
+      setLoading(false)
+    }, 2000)
+  }
+
   return (
     <div
       className='fixed inset-0 bg-transparent flex justify-end z-50'
@@ -88,7 +124,7 @@ export const SlideOverPanel = ({
         <div className='mb-2'>
           <strong>Score:</strong> {selectedLead?.score}
         </div>
-        {editError ? <ErrorText textError={oppError} /> : null}
+        {editError ? <ErrorText textError={editError} /> : null}
 
         <div className='flex gap-2 mt-4'>
           <button
@@ -106,7 +142,9 @@ export const SlideOverPanel = ({
             Cancel
           </button>
         </div>
+
         <hr className='my-4' />
+
         <h3 className='text-lg font-semibold mb-2'>Convert to Opportunity</h3>
         <div className='mb-2'>
           <label className='block mb-1'>Stage</label>
@@ -136,31 +174,10 @@ export const SlideOverPanel = ({
 
         <button
           className='bg-green-500 text-white px-4 py-2 rounded mt-2'
-          onClick={() => {
-            setOppError('')
-            if (!selectedLead) return
-            // Validate amount
-            if (oppAmount && isNaN(Number(oppAmount))) {
-              setOppError('Amount must be a number')
-              return
-            }
-            // Create opportunity
-            setOpportunities((prev) => [
-              ...prev,
-              {
-                id: Date.now(),
-                name: selectedLead?.name,
-                stage: oppStage,
-                amount: oppAmount ? Number(oppAmount) : undefined,
-                accountName: selectedLead?.company,
-              },
-            ])
-            setSelectedLead(null)
-            setOppAmount('')
-            setOppStage(STAGE_OPTIONS[0])
-          }}
+          onClick={handleConvertLead}
+          disabled={loading}
         >
-          Convert Lead
+          {loading ? 'Converting...' : 'Convert Lead'}
         </button>
       </div>
     </div>

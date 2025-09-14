@@ -5,9 +5,10 @@ import { SlideOverPanel } from '../components/SlideOverPanel'
 import { TableLeads } from '../components/TableLeads'
 import { Search } from '../components/Search'
 import { Filter } from '../components/Filter'
+import { Sort } from '../components/Sort'
 
 export const Dashboard = () => {
-  const { sortBy, setSortBy, selectedLead } = useLeadsContext()
+  const { selectedLead } = useLeadsContext()
 
   return (
     <div className='p-4'>
@@ -16,17 +17,7 @@ export const Dashboard = () => {
       <div className='flex gap-2 mb-4'>
         <Search />
         <Filter />
-        <div>
-          <label className='mr-2 font-medium'>Sort by:</label>
-          <select
-            value={sortBy}
-            onChange={(e) => setSortBy(e.target.value as 'id' | 'score')}
-            className='border rounded px-2 py-1'
-          >
-            <option value='id'>ID</option>
-            <option value='score'>Score (desc)</option>
-          </select>
-        </div>
+        <Sort />
       </div>
 
       <TableLeads />

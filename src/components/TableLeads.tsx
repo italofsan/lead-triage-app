@@ -52,9 +52,15 @@ export const TableLeads = () => {
                 onClick={() => openLeadPanel(lead)}
               >
                 <td className='p-2 border'>{lead.id}</td>
-                <td className='p-2 border truncate whitespace-nowrap overflow-hidden'>{lead.name}</td>
-                <td className='p-2 border truncate whitespace-nowrap overflow-hidden'>{lead.company}</td>
-                <td className='p-2 border truncate whitespace-nowrap overflow-hidden'>{lead.email}</td>
+                <td className='p-2 border truncate whitespace-nowrap overflow-hidden'>
+                  {lead.name}
+                </td>
+                <td className='p-2 border truncate whitespace-nowrap overflow-hidden'>
+                  {lead.company}
+                </td>
+                <td className='p-2 border truncate whitespace-nowrap overflow-hidden'>
+                  {lead.email}
+                </td>
                 <td className='p-2 border'>{lead.source}</td>
                 <td className='p-2 border'>{lead.score}</td>
                 <td className='p-2 border'>{lead.status}</td>
@@ -66,7 +72,7 @@ export const TableLeads = () => {
 
       <div className='flex justify-center items-center gap-2 mt-4 '>
         <button
-          className='px-3 py-1 rounded border bg-gray-100 disabled:opacity-50'
+          className='px-3 py-1 rounded border bg-gray-100 disabled:opacity-50 cursor-pointer disabled:cursor-default'
           onClick={() => setPage((prevState) => Math.max(1, prevState - 1))}
           disabled={page === 1}
         >
@@ -76,7 +82,7 @@ export const TableLeads = () => {
           Page {page} of {totalPages}
         </span>
         <button
-          className='px-3 py-1 rounded border bg-gray-100 disabled:opacity-50'
+          className='px-3 py-1 rounded border bg-gray-100 disabled:opacity-50 cursor-pointer disabled:cursor-default'
           onClick={() =>
             setPage((prevState) => Math.min(totalPages, prevState + 1))
           }

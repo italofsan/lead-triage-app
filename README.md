@@ -1,69 +1,43 @@
-# React + TypeScript + Vite
+# Lead Triage App
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Description
 
-Currently, two official plugins are available:
+This is a web project coded by myself. It's a console for selecting leads and converting them into opportunities.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+It is possible to see a production preview https://italofsan-lead-triage-app.netlify.app.
 
-## Expanding the ESLint configuration
+## Setup
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+```bash
+  # To run this project follow the steps below
 
-```js
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+  # Open CMD
+  # Put these commands at the command prompt 
 
-      // Remove tseslint.configs.recommended and replace with this
-      ...tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      ...tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      ...tseslint.configs.stylisticTypeChecked,
+  # Clone this repository:
+  $ git clone https://github.com/italofsan/lead-triage-app.git
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+  # Go to the folder:
+  $ cd lead-triage-app
+
+  # Install all dependencies:
+  $ yarn or npm install
+
+  # See development preview
+  $ yarn dev or npm run dev
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## Website
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+### Dashboard
+<img width="1814" height="913" alt="image" src="https://github.com/user-attachments/assets/7ffd4785-d750-457b-9b2d-deccd1f38bc6" />
+<img width="1839" height="917" alt="image" src="https://github.com/user-attachments/assets/9479fead-7fa3-435e-95c8-c233fae1bbe8" />
 
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+### Mobile Responsive Website
+<img width="379" height="820" alt="image" src="https://github.com/user-attachments/assets/ed4e573c-d8ff-464d-b385-6318728092ec" />
+<img width="378" height="824" alt="image" src="https://github.com/user-attachments/assets/488a3733-9240-49e7-a874-062a45a93b66" />
+
+## Technologies
+- [Vite](https://vite.dev)
+- [Tailwind](https://tailwindcss.com)
+- [TypeScript](https://www.typescriptlang.org/)

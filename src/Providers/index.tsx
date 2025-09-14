@@ -4,9 +4,9 @@ import { OpportunitiesProvider } from '../context/OpportunitiesContext'
 import { LeadEditorProvider } from '../context/LeadEditorContext'
 import { LeadsProvider } from '../context/LeadsContext'
 
-type Props = { children: ReactNode }
+type AppProvidersProps = { children: ReactNode }
 
-export const AppProviders = ({ children }: Props) => {
+export const AppProviders = ({ children }: AppProvidersProps) => {
   return (
     <LeadsProvider>
       <LeadEditorProvider>

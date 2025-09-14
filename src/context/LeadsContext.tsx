@@ -8,6 +8,7 @@ import {
   type SetStateAction,
 } from 'react'
 
+import { getItem, setItem } from '../utils/storage'
 import type { Lead } from '../types'
 
 interface LeadsContextProps {
@@ -30,10 +31,22 @@ export const LeadsProvider = ({ children }: { children: ReactNode }) => {
   const [leads, setLeads] = useState<Lead[]>([])
   const [filteredLeads, setFilteredLeads] = useState<Lead[]>([])
   const [search, setSearch] = useState('')
-  const [statusFilter, setStatusFilter] = useState('')
-  const [sortBy, setSortBy] = useState<'id' | 'score'>('id')
+  const [statusFilter, setStatusFilter] = useState(
+    () => getItem('leadStatusFilter') || ''
+  )
+  const [sortBy, setSortBy] = useState<'id' | 'score'>(
+    (getItem('leadSortBy') as 'id' | 'score') || 'id'
+  )
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
+
+  useEffect(() => {
+    setItem('leadStatusFilter', statusFilter)
+  }, [statusFilter])
+
+  useEffect(() => {
+    setItem('leadSortBy', sortBy)
+  }, [sortBy])
 
   // Load leads
   useEffect(() => {

@@ -1,5 +1,6 @@
 import { STAGE_OPTIONS, STATUS_OPTIONS } from '../utils/consts'
 import type { Lead, Opportunity } from '../types'
+import { ErrorText } from './ErrorText'
 
 type SlideOverPanelProps = {
   selectedLead: Lead | null
@@ -81,7 +82,8 @@ export const SlideOverPanel = ({
         <div className='mb-2'>
           <strong>Score:</strong> {selectedLead?.score}
         </div>
-        {editError && <div className='text-red-500 mb-2'>{editError}</div>}
+        {editError ? <ErrorText textError={oppError} /> : null}
+
         <div className='flex gap-2 mt-4'>
           <button
             className='bg-blue-500 text-white px-4 py-2 rounded disabled:opacity-50'
@@ -124,7 +126,8 @@ export const SlideOverPanel = ({
             min='0'
           />
         </div>
-        {oppError && <div className='text-red-500 mb-2'>{oppError}</div>}
+        {oppError ? <ErrorText textError={oppError} /> : null}
+
         <button
           className='bg-green-500 text-white px-4 py-2 rounded mt-2'
           onClick={() => {

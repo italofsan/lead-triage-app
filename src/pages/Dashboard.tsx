@@ -4,7 +4,7 @@ import { validateEmail } from '../utils'
 import { TableLeads } from '../components/TableLeads'
 import { TableOpportunities } from '../components/TableOpportunities'
 import { Search } from '../components/Search'
-import { STAGE_OPTIONS, STATUS_OPTIONS } from '../utils/consts'
+import { STAGE_OPTIONS } from '../utils/consts'
 import { Filter } from '../components/Filter'
 import { SlideOverPanel } from '../components/SlideOverPanel'
 
@@ -96,9 +96,6 @@ export const Dashboard = () => {
     setEditError('')
   }
 
-  if (loading) return <div>Loading leads...</div>
-  if (error) return <div className='text-red-500'>{error}</div>
-
   return (
     <div className='p-4'>
       <h1 className='text-2xl font-bold mb-4'>Leads</h1>
@@ -108,7 +105,12 @@ export const Dashboard = () => {
         <Filter statusFilter={statusFilter} setStatusFilter={setStatusFilter} />
       </div>
 
-      <TableLeads filteredLeads={filteredLeads} openLeadPanel={openLeadPanel} />
+      <TableLeads
+        filteredLeads={filteredLeads}
+        openLeadPanel={openLeadPanel}
+        loading={loading}
+        error={error}
+      />
       <TableOpportunities opportunities={opportunities} />
 
       {/* Slide-over panel */}

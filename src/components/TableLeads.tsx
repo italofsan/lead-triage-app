@@ -3,14 +3,26 @@ import type { Lead } from '../types'
 type TableLeadsProps = {
   openLeadPanel: (lead: Lead) => void
   filteredLeads: Lead[]
+  loading: boolean
+  error: string
 }
 
 export const TableLeads = ({
   filteredLeads,
   openLeadPanel,
+  loading,
+  error,
 }: TableLeadsProps) => {
+  if (loading) {
+    return <div>Loading leads...</div>
+  }
+
   if (filteredLeads.length === 0) {
     return <div>No leads found.</div>
+  }
+
+  if (error) {
+    return <div className='text-red-500'>{error}</div>
   }
 
   return (

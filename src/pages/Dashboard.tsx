@@ -1,26 +1,11 @@
-import React, { useEffect, useState } from 'react'
-
-type Lead = {
-  id: number
-  name: string
-  company: string
-  email: string
-  source: string
-  score: number
-  status: string
-}
-
-const STATUS_OPTIONS = ['New', 'Contacted', 'Qualified']
-
-type Opportunity = {
-  id: number
-  name: string
-  stage: string
-  amount?: number
-  accountName: string
-}
-
-const STAGE_OPTIONS = ['Prospecting', 'Qualified', 'Proposal', 'Closed Won']
+import { useEffect, useState } from 'react'
+import type { Lead, Opportunity } from '../types'
+import { validateEmail } from '../utils'
+import { TableLeads } from '../components/TableLeads'
+import { TableOpportunities } from '../components/TableOpportunities'
+import { Search } from '../components/Search'
+import { STAGE_OPTIONS, STATUS_OPTIONS } from '../utils/consts'
+import { Filter } from '../components/Filter'
 
 export const Dashboard = () => {
   const [leads, setLeads] = useState<Lead[]>([])
@@ -80,11 +65,6 @@ export const Dashboard = () => {
     setEditError('')
   }
 
-  // Validate email format
-  const validateEmail = (email: string) => {
-    return /^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)
-  }
-
   // Save changes
   const handleSave = () => {
     setSaving(true)
@@ -122,87 +102,14 @@ export const Dashboard = () => {
   return (
     <div className='p-4'>
       <h1 className='text-2xl font-bold mb-4'>Leads</h1>
+
       <div className='flex gap-2 mb-4'>
-        <input
-          type='text'
-          placeholder='Search name/company...'
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-          className='border px-2 py-1 rounded'
-        />
-        <select
-          value={statusFilter}
-          onChange={(e) => setStatusFilter(e.target.value)}
-          className='border px-2 py-1 rounded'
-        >
-          <option value=''>All Status</option>
-          {STATUS_OPTIONS.map((status) => (
-            <option key={status} value={status}>
-              {status}
-            </option>
-          ))}
-        </select>
+        <Search search={search} setSearch={setSearch} />
+        <Filter statusFilter={statusFilter} setStatusFilter={setStatusFilter} />
       </div>
 
-      <table className='min-w-full border'>
-        <thead>
-          <tr className='bg-gray-100'>
-            <th className='p-2 border'>Name</th>
-            <th className='p-2 border'>Company</th>
-            <th className='p-2 border'>Email</th>
-            <th className='p-2 border'>Source</th>
-            <th className='p-2 border'>Score</th>
-            <th className='p-2 border'>Status</th>
-          </tr>
-        </thead>
-        <tbody>
-          {filteredLeads.map((lead) => (
-            <tr
-              key={lead.id}
-              className='hover:bg-gray-50 cursor-pointer'
-              onClick={() => openLeadPanel(lead)}
-            >
-              <td className='p-2 border'>{lead.name}</td>
-              <td className='p-2 border'>{lead.company}</td>
-              <td className='p-2 border'>{lead.email}</td>
-              <td className='p-2 border'>{lead.source}</td>
-              <td className='p-2 border'>{lead.score}</td>
-              <td className='p-2 border'>{lead.status}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-
-      {/* Opportunities Table with states */}
-      <div className='mt-8'>
-        <h2 className='text-xl font-bold mb-4'>Opportunities</h2>
-        {opportunities.length === 0 ? (
-          <div className='text-gray-500'>No opportunities yet.</div>
-        ) : (
-          <table className='min-w-full border'>
-            <thead>
-              <tr className='bg-gray-100'>
-                <th className='p-2 border'>Name</th>
-                <th className='p-2 border'>Stage</th>
-                <th className='p-2 border'>Amount</th>
-                <th className='p-2 border'>Account Name</th>
-              </tr>
-            </thead>
-            <tbody>
-              {opportunities.map((opp) => (
-                <tr key={opp.id}>
-                  <td className='p-2 border'>{opp.name}</td>
-                  <td className='p-2 border'>{opp.stage}</td>
-                  <td className='p-2 border'>
-                    {opp.amount !== undefined ? `$${opp.amount}` : '-'}
-                  </td>
-                  <td className='p-2 border'>{opp.accountName}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        )}
-      </div>
+      <TableLeads filteredLeads={filteredLeads} openLeadPanel={openLeadPanel} />
+      <TableOpportunities opportunities={opportunities} />
 
       {/* Slide-over panel */}
       {selectedLead && (

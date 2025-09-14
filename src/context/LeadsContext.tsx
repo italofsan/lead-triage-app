@@ -1,12 +1,5 @@
-import {
-  createContext,
-  useContext,
-  useState,
-  useEffect,
-  type ReactNode,
-  type Dispatch,
-  type SetStateAction,
-} from 'react'
+import { createContext, useContext, useState, useEffect, useMemo } from 'react'
+import type { ReactNode, Dispatch, SetStateAction } from 'react'
 
 import { getItem, setItem } from '../utils/storage'
 import type { Lead } from '../types'
@@ -48,14 +41,13 @@ export const LeadsProvider = ({ children }: { children: ReactNode }) => {
     setItem('leadSortBy', sortBy)
   }, [sortBy])
 
-  // Load leads
   useEffect(() => {
     setLoading(true)
     setTimeout(() => {
       fetch('/leads.json')
-        .then((res) => {
-          if (!res.ok) throw new Error('Failed to load leads')
-          return res.json()
+        .then((response) => {
+          if (!response.ok) throw new Error('Failed to load leads')
+          return response.json()
         })
         .then((data) => {
           setLeads(data)
@@ -68,8 +60,8 @@ export const LeadsProvider = ({ children }: { children: ReactNode }) => {
     }, 2000)
   }, [])
 
-  // Filter and sort
-  useEffect(() => {
+  // Filtered leads (useMemo)
+  const filtered = useMemo(() => {
     let result = leads
     if (search) {
       const s = search.toLowerCase()
@@ -82,13 +74,18 @@ export const LeadsProvider = ({ children }: { children: ReactNode }) => {
     if (statusFilter) {
       result = result.filter((lead) => lead.status === statusFilter)
     }
+    return result
+  }, [leads, search, statusFilter])
+
+  useEffect(() => {
+    let sorted = [...filtered]
     if (sortBy === 'id') {
-      result = [...result].sort((a, b) => a.id - b.id)
+      sorted = sorted.sort((leadA, leadB) => leadA.id - leadB.id)
     } else {
-      result = [...result].sort((a, b) => b.score - a.score)
+      sorted = sorted.sort((leadA, leadB) => leadB.score - leadA.score)
     }
-    setFilteredLeads(result)
-  }, [leads, search, statusFilter, sortBy])
+    setFilteredLeads(sorted)
+  }, [filtered, sortBy])
 
   return (
     <LeadsContext.Provider

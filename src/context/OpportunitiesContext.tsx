@@ -59,8 +59,8 @@ export const OpportunitiesProvider = ({
         return
       }
       // Create opportunity
-      setOpportunities((prev) => [
-        ...prev,
+      setOpportunities((prevState) => [
+        ...prevState,
         {
           id: Date.now(),
           name: selectedLead?.name,
@@ -70,7 +70,9 @@ export const OpportunitiesProvider = ({
         },
       ])
       // Remove lead from list
-      setLeads((prev) => prev.filter((l) => l.id !== selectedLead?.id))
+      setLeads((prevState) =>
+        prevState.filter((lead) => lead.id !== selectedLead?.id)
+      )
       setSelectedLead(null)
       setOppAmount('')
       setOppStage(STAGE_OPTIONS[0])

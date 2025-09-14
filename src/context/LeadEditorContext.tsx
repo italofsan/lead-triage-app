@@ -49,14 +49,17 @@ export const LeadEditorProvider = ({ children }: { children: ReactNode }) => {
   const handleSave = (setLeads: Dispatch<SetStateAction<Lead[]>>) => {
     setLoading(true)
     setEditError('')
+
     if (!validateEmail(editEmail)) {
       setEditError('Invalid email format')
       setLoading(false)
       return
     }
+
     if (!selectedLead) {
       return
     }
+
     setTimeout(() => {
       setLeads((prev) =>
         prev.map((lead) =>

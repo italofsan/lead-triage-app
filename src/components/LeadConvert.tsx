@@ -14,8 +14,9 @@ export const LeadConvert = () => {
     setOppAmount,
     handleConvertLead,
     setOppStage,
+    loading,
   } = useOpportunitiesContext()
-  const { selectedLead, loading, setSelectedLead } = useLeadEditorContext()
+  const { selectedLead, setSelectedLead } = useLeadEditorContext()
 
   return (
     <>
@@ -47,7 +48,9 @@ export const LeadConvert = () => {
       {oppError ? <ErrorText textError={oppError} /> : null}
 
       <button
-        className='bg-green-500 text-white px-4 py-2 rounded mt-2'
+        className={`bg-green-500 text-white px-4 py-2 rounded mt-2 ${
+          loading ? '' : 'cursor-pointer'
+        }`}
         onClick={() =>
           handleConvertLead(selectedLead, setLeads, setSelectedLead)
         }

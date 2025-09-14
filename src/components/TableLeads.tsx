@@ -13,11 +13,13 @@ export const TableLeads = ({
   loading,
   error,
 }: TableLeadsProps) => {
+  const emptyList = filteredLeads.length === 0
+
   if (loading) {
     return <div>Loading leads...</div>
   }
 
-  if (filteredLeads.length === 0) {
+  if (emptyList) {
     return <div>No leads found.</div>
   }
 

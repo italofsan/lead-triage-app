@@ -1,71 +1,33 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
+
+import { useLeadsContext } from '../context/LeadsContext'
+
 import type { Lead, Opportunity } from '../types'
-import { validateEmail } from '../utils'
-import { TableLeads } from '../components/TableLeads'
-import { TableOpportunities } from '../components/TableOpportunities'
-import { Search } from '../components/Search'
 import { STAGE_OPTIONS } from '../utils/consts'
-import { Filter } from '../components/Filter'
+import { validateEmail } from '../utils'
+
+import { TableOpportunities } from '../components/TableOpportunities'
 import { SlideOverPanel } from '../components/SlideOverPanel'
+import { TableLeads } from '../components/TableLeads'
+import { Search } from '../components/Search'
+import { Filter } from '../components/Filter'
 
 export const Dashboard = () => {
-  const [leads, setLeads] = useState<Lead[]>([])
-  const [filteredLeads, setFilteredLeads] = useState<Lead[]>([])
-  const [search, setSearch] = useState('')
-  const [statusFilter, setStatusFilter] = useState('')
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState('')
+  const { setLeads, filteredLeads, loading, error, sortBy, setSortBy } =
+    useLeadsContext()
   const [selectedLead, setSelectedLead] = useState<Lead | null>(null)
+
+  const [saving, setSaving] = useState(false)
+  const [opportunities, setOpportunities] = useState<Opportunity[]>([])
+
   const [editEmail, setEditEmail] = useState('')
   const [editStatus, setEditStatus] = useState('')
   const [editError, setEditError] = useState('')
-  const [saving, setSaving] = useState(false)
-  const [opportunities, setOpportunities] = useState<Opportunity[]>([])
+
   const [oppStage, setOppStage] = useState(STAGE_OPTIONS[0])
   const [oppAmount, setOppAmount] = useState('')
   const [oppError, setOppError] = useState('')
-  const [sortBy, setSortBy] = useState<'id' | 'score'>('id')
 
-  useEffect(() => {
-    setTimeout(() => {
-      fetch('/leads.json')
-        .then((res) => {
-          if (!res.ok) throw new Error('Failed to load leads')
-          return res.json()
-        })
-        .then((data) => {
-          setLeads(data)
-          setLoading(false)
-        })
-        .catch(() => {
-          setError('Error loading leads')
-          setLoading(false)
-        })
-    }, 2000)
-  }, [])
-
-  useEffect(() => {
-    let result = leads
-    if (search) {
-      const s = search.toLowerCase()
-      result = result.filter(
-        (lead) =>
-          lead.name.toLowerCase().includes(s) ||
-          lead.company.toLowerCase().includes(s)
-      )
-    }
-    if (statusFilter) {
-      result = result.filter((lead) => lead.status === statusFilter)
-    }
-    if (sortBy === 'id') {
-      result = [...result].sort((a, b) => a.id - b.id)
-    } else {
-      result = [...result].sort((a, b) => b.score - a.score)
-    }
-    setFilteredLeads(result)
-  }, [leads, search, statusFilter, sortBy])
-
-  // Open panel and set edit fields
   const openLeadPanel = (lead: Lead) => {
     setSelectedLead(lead)
     setEditEmail(lead.email)
@@ -73,7 +35,6 @@ export const Dashboard = () => {
     setEditError('')
   }
 
-  // Save changes
   const handleSave = () => {
     setSaving(true)
     setEditError('')
@@ -82,8 +43,10 @@ export const Dashboard = () => {
       setSaving(false)
       return
     }
-    if (!selectedLead) return
-    // Simulate save
+    if (!selectedLead) {
+      return
+    }
+
     setTimeout(() => {
       setLeads((prev) =>
         prev.map((lead) =>
@@ -97,7 +60,6 @@ export const Dashboard = () => {
     }, 500)
   }
 
-  // Cancel edit
   const handleCancel = () => {
     setSelectedLead(null)
     setEditError('')
@@ -108,8 +70,8 @@ export const Dashboard = () => {
       <h1 className='text-2xl font-bold mb-4'>Leads</h1>
 
       <div className='flex gap-2 mb-4'>
-        <Search search={search} setSearch={setSearch} />
-        <Filter statusFilter={statusFilter} setStatusFilter={setStatusFilter} />
+        <Search />
+        <Filter />
         <div>
           <label className='mr-2 font-medium'>Sort by:</label>
           <select
@@ -131,7 +93,6 @@ export const Dashboard = () => {
       />
       <TableOpportunities opportunities={opportunities} />
 
-      {/* Slide-over panel */}
       {selectedLead ? (
         <SlideOverPanel
           editEmail={editEmail}

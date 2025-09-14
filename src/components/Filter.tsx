@@ -1,11 +1,9 @@
+import { useLeadsContext } from '../context/LeadsContext'
 import { STATUS_OPTIONS } from '../utils/consts'
 
-type FilterProps = {
-  statusFilter: string
-  setStatusFilter: (value: React.SetStateAction<string>) => void
-}
+export const Filter = () => {
+  const { statusFilter, setStatusFilter } = useLeadsContext()
 
-export const Filter = ({ statusFilter, setStatusFilter }: FilterProps) => {
   return (
     <select
       value={statusFilter}

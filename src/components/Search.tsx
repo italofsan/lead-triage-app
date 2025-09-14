@@ -1,9 +1,8 @@
-type SearchProps = {
-  search: string
-  setSearch: (value: React.SetStateAction<string>) => void
-}
+import { useLeadsContext } from '../context/LeadsContext'
 
-export const Search = ({ search, setSearch }: SearchProps) => {
+export const Search = () => {
+  const { search, setSearch } = useLeadsContext()
+
   return (
     <input
       type='text'

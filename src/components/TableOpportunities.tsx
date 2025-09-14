@@ -7,10 +7,12 @@ type TableOpportunitiesProps = {
 export const TableOpportunities = ({
   opportunities,
 }: TableOpportunitiesProps) => {
+  const emptyList = opportunities.length === 0
+
   return (
     <div className='mt-8'>
       <h2 className='text-xl font-bold mb-4'>Opportunities</h2>
-      {opportunities.length === 0 ? (
+      {emptyList ? (
         <div className='text-gray-500'>No opportunities yet.</div>
       ) : (
         <table className='min-w-full border'>

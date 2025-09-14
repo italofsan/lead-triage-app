@@ -1,0 +1,92 @@
+[
+  {
+    "id": 1,
+    "name": "Alice Smith",
+    "company": "Acme Corp",
+    "email": "alice.smith@acme.com",
+    "source": "Web",
+    "score": 87,
+    "status": "New"
+  },
+  {
+    "id": 2,
+    "name": "Bob Johnson",
+    "company": "Beta LLC",
+    "email": "bob.johnson@beta.com",
+    "source": "Referral",
+    "score": 92,
+    "status": "Contacted"
+  },
+  {
+    "id": 3,
+    "name": "Carol Lee",
+    "company": "Gamma Inc",
+    "email": "carol.lee@gamma.com",
+    "source": "Event",
+    "score": 75,
+    "status": "Qualified"
+  },
+  {
+    "id": 4,
+    "name": "David Kim",
+    "company": "Delta Co",
+    "email": "david.kim@delta.com",
+    "source": "Web",
+    "score": 80,
+    "status": "New"
+  },
+  {
+    "id": 5,
+    "name": "Eva Green",
+    "company": "Epsilon Ltd",
+    "email": "eva.green@epsilon.com",
+    "source": "Referral",
+    "score": 95,
+    "status": "Contacted"
+  },
+  {
+    "id": 6,
+    "name": "Frank Moore",
+    "company": "Zeta Group",
+    "email": "frank.moore@zeta.com",
+    "source": "Event",
+    "score": 70,
+    "status": "Qualified"
+  },
+  {
+    "id": 7,
+    "name": "Grace Hall",
+    "company": "Eta Solutions",
+    "email": "grace.hall@eta.com",
+    "source": "Web",
+    "score": 85,
+    "status": "New"
+  },
+  {
+    "id": 8,
+    "name": "Henry King",
+    "company": "Theta Partners",
+    "email": "henry.king@theta.com",
+    "source": "Referral",
+    "score": 90,
+    "status": "Contacted"
+  },
+  {
+    "id": 9,
+    "name": "Ivy Scott",
+    "company": "Iota Tech",
+    "email": "ivy.scott@iota.com",
+    "source": "Event",
+    "score": 78,
+    "status": "Qualified"
+  },
+  {
+    "id": 10,
+    "name": "Jack White",
+    "company": "Kappa Systems",
+    "email": "jack.white@kappa.com",
+    "source": "Web",
+    "score": 82,
+    "status": "New"
+  }
+]

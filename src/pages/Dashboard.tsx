@@ -1,9 +1,4 @@
-import { useState } from 'react'
-
 import { useLeadsContext } from '../context/LeadsContext'
-
-import type { Opportunity } from '../types'
-import { STAGE_OPTIONS } from '../utils/consts'
 
 import { TableOpportunities } from '../components/TableOpportunities'
 import { SlideOverPanel } from '../components/SlideOverPanel'
@@ -13,12 +8,6 @@ import { Filter } from '../components/Filter'
 
 export const Dashboard = () => {
   const { sortBy, setSortBy, selectedLead } = useLeadsContext()
-
-  const [opportunities, setOpportunities] = useState<Opportunity[]>([])
-
-  const [oppStage, setOppStage] = useState(STAGE_OPTIONS[0])
-  const [oppAmount, setOppAmount] = useState('')
-  const [oppError, setOppError] = useState('')
 
   return (
     <div className='p-4'>
@@ -41,19 +30,9 @@ export const Dashboard = () => {
       </div>
 
       <TableLeads />
-      <TableOpportunities opportunities={opportunities} />
+      <TableOpportunities />
 
-      {selectedLead ? (
-        <SlideOverPanel
-          oppStage={oppStage}
-          setOppStage={setOppStage}
-          oppAmount={oppAmount}
-          setOppAmount={setOppAmount}
-          oppError={oppError}
-          setOppError={setOppError}
-          setOpportunities={setOpportunities}
-        />
-      ) : null}
+      {selectedLead ? <SlideOverPanel /> : null}
     </div>
   )
 }

@@ -1,12 +1,8 @@
-import type { Opportunity } from '../types'
+import { useLeadsContext } from '../context/LeadsContext'
 
-type TableOpportunitiesProps = {
-  opportunities: Opportunity[]
-}
+export const TableOpportunities = () => {
+  const { opportunities } = useLeadsContext()
 
-export const TableOpportunities = ({
-  opportunities,
-}: TableOpportunitiesProps) => {
   const emptyList = opportunities.length === 0
 
   return (

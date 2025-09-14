@@ -8,8 +8,9 @@ import {
   type SetStateAction,
 } from 'react'
 
-import type { Lead } from '../types'
+import type { Lead, Opportunity } from '../types'
 import { validateEmail } from '../utils'
+import { STAGE_OPTIONS } from '../utils/consts'
 
 interface LeadsContextProps {
   openLeadPanel: (lead: Lead) => void
@@ -32,9 +33,18 @@ interface LeadsContextProps {
   setEditStatus: Dispatch<SetStateAction<string>>
   editError: string
   setEditError: Dispatch<SetStateAction<string>>
-  saving: boolean
   handleSave: () => void
   handleCancel: () => void
+
+  oppStage: string
+  setOppStage: (value: React.SetStateAction<string>) => void
+  oppAmount: string
+  setOppAmount: (value: React.SetStateAction<string>) => void
+  oppError: string
+  setOppError: (value: React.SetStateAction<string>) => void
+  opportunities: Opportunity[]
+  setOpportunities: React.Dispatch<React.SetStateAction<Opportunity[]>>
+  handleConvertLead(): void
 }
 
 const LeadsContext = createContext<LeadsContextProps | undefined>(undefined)
@@ -50,20 +60,20 @@ export const LeadsProvider = ({ children }: { children: ReactNode }) => {
   const [filteredLeads, setFilteredLeads] = useState<Lead[]>([])
   const [search, setSearch] = useState('')
   const [statusFilter, setStatusFilter] = useState('')
-  const [loading, setLoading] = useState(true)
+  const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
   const [sortBy, setSortBy] = useState<'id' | 'score'>('id')
   const [selectedLead, setSelectedLead] = useState<Lead | null>(null)
   const [editEmail, setEditEmail] = useState('')
   const [editStatus, setEditStatus] = useState('')
   const [editError, setEditError] = useState('')
-  const [saving, setSaving] = useState(false)
+
   const handleSave = () => {
-    setSaving(true)
+    setLoading(true)
     setEditError('')
     if (!validateEmail(editEmail)) {
       setEditError('Invalid email format')
-      setSaving(false)
+      setLoading(false)
       return
     }
     if (!selectedLead) return
@@ -76,8 +86,45 @@ export const LeadsProvider = ({ children }: { children: ReactNode }) => {
         )
       )
       setSelectedLead(null)
-      setSaving(false)
+      setLoading(false)
     }, 500)
+  }
+
+  const [opportunities, setOpportunities] = useState<Opportunity[]>([])
+
+  const [oppStage, setOppStage] = useState(STAGE_OPTIONS[0])
+  const [oppAmount, setOppAmount] = useState('')
+  const [oppError, setOppError] = useState('')
+
+  function handleConvertLead() {
+    setLoading(true)
+
+    setTimeout(() => {
+      setOppError('')
+      if (!selectedLead) return
+      // Validate amount
+      if (oppAmount && isNaN(Number(oppAmount))) {
+        setOppError('Amount must be a number')
+        return
+      }
+      // Create opportunity
+      setOpportunities((prev) => [
+        ...prev,
+        {
+          id: Date.now(),
+          name: selectedLead?.name,
+          stage: oppStage,
+          amount: oppAmount ? Number(oppAmount) : undefined,
+          accountName: selectedLead?.company,
+        },
+      ])
+      // Remove lead from list
+      setLeads((prev) => prev.filter((l) => l.id !== selectedLead?.id))
+      setSelectedLead(null)
+      setOppAmount('')
+      setOppStage(STAGE_OPTIONS[0])
+      setLoading(false)
+    }, 2000)
   }
 
   const handleCancel = () => {
@@ -147,9 +194,18 @@ export const LeadsProvider = ({ children }: { children: ReactNode }) => {
         setEditStatus,
         editError,
         setEditError,
-        saving,
         handleSave,
         handleCancel,
+
+        opportunities,
+        oppAmount,
+        oppError,
+        oppStage,
+        setOppAmount,
+        setOppError,
+        setOppStage,
+        setOpportunities,
+        handleConvertLead,
       }}
     >
       {children}

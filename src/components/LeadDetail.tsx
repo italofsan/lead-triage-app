@@ -11,7 +11,7 @@ export const LeadDetail = () => {
     editStatus,
     handleCancel,
     handleSave,
-    saving,
+    loading,
     setEditEmail,
     setEditStatus,
   } = useLeadsContext()
@@ -31,7 +31,7 @@ export const LeadDetail = () => {
           value={editEmail}
           onChange={(e) => setEditEmail(e.target.value)}
           className='border px-2 py-1 rounded w-full mt-1'
-          disabled={saving}
+          disabled={loading}
         />
       </div>
       <div className='mb-2'>
@@ -40,7 +40,7 @@ export const LeadDetail = () => {
           value={editStatus}
           onChange={(e) => setEditStatus(e.target.value)}
           className='border px-2 py-1 rounded w-full mt-1'
-          disabled={saving}
+          disabled={loading}
         >
           {STATUS_OPTIONS.map((status) => (
             <option key={status} value={status}>
@@ -61,14 +61,14 @@ export const LeadDetail = () => {
         <button
           className='bg-blue-500 text-white px-4 py-2 rounded disabled:opacity-50'
           onClick={handleSave}
-          disabled={saving}
+          disabled={loading}
         >
-          {saving ? 'Saving...' : 'Save'}
+          {loading ? 'Saving...' : 'Save'}
         </button>
         <button
           className='bg-gray-300 px-4 py-2 rounded'
           onClick={handleCancel}
-          disabled={saving}
+          disabled={loading}
         >
           Cancel
         </button>

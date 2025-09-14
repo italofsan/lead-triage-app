@@ -9,6 +9,10 @@ export const TableLeads = ({
   filteredLeads,
   openLeadPanel,
 }: TableLeadsProps) => {
+  if (filteredLeads.length === 0) {
+    return <div>No leads found.</div>
+  }
+
   return (
     <table className='min-w-full border'>
       <thead>

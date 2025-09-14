@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 import { useLeadEditorContext } from '../context/LeadEditorContext'
 import { useLeadsContext } from '../context/LeadsContext'
@@ -14,6 +14,10 @@ export const TableLeads = () => {
     (page - 1) * pageSize,
     page * pageSize
   )
+
+  useEffect(() => {
+    setPage(1)
+  }, [filteredLeads.length])
 
   const emptyList = filteredLeads.length === 0
 
@@ -84,7 +88,7 @@ export const TableLeads = () => {
         </table>
       </div>
 
-  <div className='flex flex-row justify-center items-center gap-2 sm:gap-4 mt-4 sm:mt-6 w-full'>
+      <div className='flex flex-row justify-center items-center gap-2 sm:gap-4 mt-4 sm:mt-6 w-full'>
         <button
           className='px-3 py-2 sm:px-4 sm:py-2 rounded-xl shadow bg-white border border-gray-200 text-gray-700 font-semibold disabled:opacity-50 cursor-pointer disabled:cursor-default transition-all duration-200 hover:bg-gray-100 w-full sm:w-auto sm:flex-none'
           onClick={() => setPage((prevState) => Math.max(1, prevState - 1))}

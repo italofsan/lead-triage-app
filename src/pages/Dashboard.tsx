@@ -1,4 +1,4 @@
-import { useLeadsContext } from '../context/LeadsContext'
+import { useLeadEditorContext } from '../context/LeadEditorContext'
 
 import { TableOpportunities } from '../components/TableOpportunities'
 import { SlideOverPanel } from '../components/SlideOverPanel'
@@ -8,7 +8,7 @@ import { Filter } from '../components/Filter'
 import { Sort } from '../components/Sort'
 
 export const Dashboard = () => {
-  const { selectedLead } = useLeadsContext()
+  const { selectedLead } = useLeadEditorContext()
 
   return (
     <div className='p-4'>

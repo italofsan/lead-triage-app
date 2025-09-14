@@ -1,7 +1,9 @@
+import { useLeadEditorContext } from '../context/LeadEditorContext'
 import { useLeadsContext } from '../context/LeadsContext'
 
 export const TableLeads = () => {
-  const { filteredLeads, openLeadPanel, loading, error } = useLeadsContext()
+  const { filteredLeads, loading, error } = useLeadsContext()
+  const { openLeadPanel } = useLeadEditorContext()
 
   const emptyList = filteredLeads.length === 0
 

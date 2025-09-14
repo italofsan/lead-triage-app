@@ -1,15 +1,15 @@
-import { useLeadsContext } from '../context/LeadsContext'
+import { useLeadEditorContext } from '../context/LeadEditorContext'
 
 import { LeadConvert } from './LeadConvert'
 import { LeadDetail } from './LeadDetail'
 
 export const SlideOverPanel = () => {
-  const { handleCancel } = useLeadsContext()
+  const { closeLeadPanel } = useLeadEditorContext()
 
   return (
     <div
       className='fixed inset-0 bg-transparent flex justify-end z-50'
-      onClick={handleCancel}
+      onClick={closeLeadPanel}
     >
       <div
         className='bg-white w-96 h-full shadow-2xl p-6 flex flex-col'

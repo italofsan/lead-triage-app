@@ -1,20 +1,21 @@
+import { useLeadEditorContext } from '../context/LeadEditorContext'
 import { useLeadsContext } from '../context/LeadsContext'
 import { STATUS_OPTIONS } from '../utils/consts'
 
 import { ErrorText } from './ErrorText'
 
 export const LeadDetail = () => {
+  const { loading, setLeads } = useLeadsContext()
   const {
     selectedLead,
     editEmail,
     editError,
     editStatus,
-    handleCancel,
+    closeLeadPanel,
     handleSave,
-    loading,
     setEditEmail,
     setEditStatus,
-  } = useLeadsContext()
+  } = useLeadEditorContext()
 
   return (
     <>
@@ -60,14 +61,14 @@ export const LeadDetail = () => {
       <div className='flex gap-2 mt-4'>
         <button
           className='bg-blue-500 text-white px-4 py-2 rounded disabled:opacity-50'
-          onClick={handleSave}
+          onClick={() => handleSave(setLeads)}
           disabled={loading}
         >
           {loading ? 'Saving...' : 'Save'}
         </button>
         <button
           className='bg-gray-300 px-4 py-2 rounded'
-          onClick={handleCancel}
+          onClick={closeLeadPanel}
           disabled={loading}
         >
           Cancel

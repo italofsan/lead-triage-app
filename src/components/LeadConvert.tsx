@@ -1,9 +1,12 @@
+import { useOpportunitiesContext } from '../context/OpportunitiesContext'
+import { useLeadEditorContext } from '../context/LeadEditorContext'
 import { useLeadsContext } from '../context/LeadsContext'
 import { STAGE_OPTIONS } from '../utils/consts'
 
 import { ErrorText } from './ErrorText'
 
 export const LeadConvert = () => {
+  const { setLeads } = useLeadsContext()
   const {
     oppError,
     oppStage,
@@ -11,8 +14,8 @@ export const LeadConvert = () => {
     setOppAmount,
     handleConvertLead,
     setOppStage,
-    loading,
-  } = useLeadsContext()
+  } = useOpportunitiesContext()
+  const { selectedLead, loading, setSelectedLead } = useLeadEditorContext()
 
   return (
     <>
@@ -45,7 +48,9 @@ export const LeadConvert = () => {
 
       <button
         className='bg-green-500 text-white px-4 py-2 rounded mt-2'
-        onClick={handleConvertLead}
+        onClick={() =>
+          handleConvertLead(selectedLead, setLeads, setSelectedLead)
+        }
         disabled={loading}
       >
         {loading ? 'Converting...' : 'Convert Lead'}

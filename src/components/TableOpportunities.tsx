@@ -1,7 +1,7 @@
-import { useLeadsContext } from '../context/LeadsContext'
+import { useOpportunitiesContext } from '../context/OpportunitiesContext'
 
 export const TableOpportunities = () => {
-  const { opportunities } = useLeadsContext()
+  const { opportunities } = useOpportunitiesContext()
 
   const emptyList = opportunities.length === 0
 

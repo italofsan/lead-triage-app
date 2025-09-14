@@ -1,18 +1,8 @@
-import type { Lead } from '../types'
+import { useLeadsContext } from '../context/LeadsContext'
 
-type TableLeadsProps = {
-  openLeadPanel: (lead: Lead) => void
-  filteredLeads: Lead[]
-  loading: boolean
-  error: string
-}
+export const TableLeads = () => {
+  const { filteredLeads, openLeadPanel, loading, error } = useLeadsContext()
 
-export const TableLeads = ({
-  filteredLeads,
-  openLeadPanel,
-  loading,
-  error,
-}: TableLeadsProps) => {
   const emptyList = filteredLeads.length === 0
 
   if (loading) {

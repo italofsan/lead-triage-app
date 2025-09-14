@@ -2,9 +2,8 @@ import { useState } from 'react'
 
 import { useLeadsContext } from '../context/LeadsContext'
 
-import type { Lead, Opportunity } from '../types'
+import type { Opportunity } from '../types'
 import { STAGE_OPTIONS } from '../utils/consts'
-import { validateEmail } from '../utils'
 
 import { TableOpportunities } from '../components/TableOpportunities'
 import { SlideOverPanel } from '../components/SlideOverPanel'
@@ -13,57 +12,13 @@ import { Search } from '../components/Search'
 import { Filter } from '../components/Filter'
 
 export const Dashboard = () => {
-  const { setLeads, filteredLeads, loading, error, sortBy, setSortBy } =
-    useLeadsContext()
-  const [selectedLead, setSelectedLead] = useState<Lead | null>(null)
+  const { sortBy, setSortBy, selectedLead } = useLeadsContext()
 
-  const [saving, setSaving] = useState(false)
   const [opportunities, setOpportunities] = useState<Opportunity[]>([])
-
-  const [editEmail, setEditEmail] = useState('')
-  const [editStatus, setEditStatus] = useState('')
-  const [editError, setEditError] = useState('')
 
   const [oppStage, setOppStage] = useState(STAGE_OPTIONS[0])
   const [oppAmount, setOppAmount] = useState('')
   const [oppError, setOppError] = useState('')
-
-  const openLeadPanel = (lead: Lead) => {
-    setSelectedLead(lead)
-    setEditEmail(lead.email)
-    setEditStatus(lead.status)
-    setEditError('')
-  }
-
-  const handleSave = () => {
-    setSaving(true)
-    setEditError('')
-    if (!validateEmail(editEmail)) {
-      setEditError('Invalid email format')
-      setSaving(false)
-      return
-    }
-    if (!selectedLead) {
-      return
-    }
-
-    setTimeout(() => {
-      setLeads((prev) =>
-        prev.map((lead) =>
-          lead.id === selectedLead.id
-            ? { ...lead, email: editEmail, status: editStatus }
-            : lead
-        )
-      )
-      setSelectedLead(null)
-      setSaving(false)
-    }, 500)
-  }
-
-  const handleCancel = () => {
-    setSelectedLead(null)
-    setEditError('')
-  }
 
   return (
     <div className='p-4'>
@@ -85,25 +40,11 @@ export const Dashboard = () => {
         </div>
       </div>
 
-      <TableLeads
-        filteredLeads={filteredLeads}
-        openLeadPanel={openLeadPanel}
-        loading={loading}
-        error={error}
-      />
+      <TableLeads />
       <TableOpportunities opportunities={opportunities} />
 
       {selectedLead ? (
         <SlideOverPanel
-          editEmail={editEmail}
-          editStatus={editStatus}
-          editError={editError}
-          saving={saving}
-          setEditEmail={setEditEmail}
-          selectedLead={selectedLead}
-          setEditStatus={setEditStatus}
-          handleSave={handleSave}
-          handleCancel={handleCancel}
           oppStage={oppStage}
           setOppStage={setOppStage}
           oppAmount={oppAmount}
@@ -111,8 +52,6 @@ export const Dashboard = () => {
           oppError={oppError}
           setOppError={setOppError}
           setOpportunities={setOpportunities}
-          setSelectedLead={setSelectedLead}
-          setLeads={setLeads}
         />
       ) : null}
     </div>

@@ -1,20 +1,11 @@
-import { STAGE_OPTIONS, STATUS_OPTIONS } from '../utils/consts'
-import type { Lead, Opportunity } from '../types'
+import { STAGE_OPTIONS } from '../utils/consts'
+import type { Opportunity } from '../types'
 import { ErrorText } from './ErrorText'
 import { useState } from 'react'
+import { LeadDetail } from './LeadDetail'
+import { useLeadsContext } from '../context/LeadsContext'
 
 type SlideOverPanelProps = {
-  selectedLead: Lead | null
-  setSelectedLead: (value: React.SetStateAction<any>) => void
-  setLeads: React.Dispatch<React.SetStateAction<Lead[]>>
-  editEmail: string
-  setEditEmail: (value: React.SetStateAction<string>) => void
-  editStatus: string
-  setEditStatus: (value: React.SetStateAction<string>) => void
-  editError: string
-  saving: boolean
-  handleSave: () => void
-  handleCancel: () => void
   oppStage: string
   setOppStage: (value: React.SetStateAction<string>) => void
   oppAmount: string
@@ -25,25 +16,16 @@ type SlideOverPanelProps = {
 }
 
 export const SlideOverPanel = ({
-  setSelectedLead,
-  selectedLead,
-  setLeads,
-  editEmail,
-  editError,
-  editStatus,
-  handleCancel,
-  handleSave,
   oppAmount,
   oppError,
   oppStage,
-  saving,
-  setEditEmail,
-  setEditStatus,
   setOppAmount,
   setOppError,
   setOppStage,
   setOpportunities,
 }: SlideOverPanelProps) => {
+  const { selectedLead, setSelectedLead, setLeads, handleCancel } =
+    useLeadsContext()
   const [loading, setLoading] = useState(false)
 
   function handleConvertLead() {
@@ -87,61 +69,7 @@ export const SlideOverPanel = ({
         onClick={(e) => e.stopPropagation()}
       >
         <h2 className='text-xl font-bold mb-4'>Lead Details</h2>
-        <div className='mb-2'>
-          <strong>Name:</strong> {selectedLead?.name}
-        </div>
-        <div className='mb-2'>
-          <strong>Company:</strong> {selectedLead?.company}
-        </div>
-        <div className='mb-2'>
-          <strong>Email:</strong>
-          <input
-            type='email'
-            value={editEmail}
-            onChange={(e) => setEditEmail(e.target.value)}
-            className='border px-2 py-1 rounded w-full mt-1'
-            disabled={saving}
-          />
-        </div>
-        <div className='mb-2'>
-          <strong>Status:</strong>
-          <select
-            value={editStatus}
-            onChange={(e) => setEditStatus(e.target.value)}
-            className='border px-2 py-1 rounded w-full mt-1'
-            disabled={saving}
-          >
-            {STATUS_OPTIONS.map((status) => (
-              <option key={status} value={status}>
-                {status}
-              </option>
-            ))}
-          </select>
-        </div>
-        <div className='mb-2'>
-          <strong>Source:</strong> {selectedLead?.source}
-        </div>
-        <div className='mb-2'>
-          <strong>Score:</strong> {selectedLead?.score}
-        </div>
-        {editError ? <ErrorText textError={editError} /> : null}
-
-        <div className='flex gap-2 mt-4'>
-          <button
-            className='bg-blue-500 text-white px-4 py-2 rounded disabled:opacity-50'
-            onClick={handleSave}
-            disabled={saving}
-          >
-            {saving ? 'Saving...' : 'Save'}
-          </button>
-          <button
-            className='bg-gray-300 px-4 py-2 rounded'
-            onClick={handleCancel}
-            disabled={saving}
-          >
-            Cancel
-          </button>
-        </div>
+        <LeadDetail />
 
         <hr className='my-4' />
 

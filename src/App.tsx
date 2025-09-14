@@ -1,4 +1,4 @@
-import { AppProviders } from './Providerstest'
+import { AppProviders } from './providers'
 
 import { Dashboard } from './pages/Dashboard'
 

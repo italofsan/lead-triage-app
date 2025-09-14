@@ -42,8 +42,14 @@ export const SlideOverPanel = ({
   setOpportunities,
 }: SlideOverPanelProps) => {
   return (
-    <div className='fixed inset-0 bg-black bg-opacity-30 flex justify-end z-50'>
-      <div className='bg-white w-96 h-full shadow-lg p-6 flex flex-col'>
+    <div
+      className='fixed inset-0 bg-transparent flex justify-end z-50'
+      onClick={handleCancel}
+    >
+      <div
+        className='bg-white w-96 h-full shadow-2xl p-6 flex flex-col'
+        onClick={(e) => e.stopPropagation()}
+      >
         <h2 className='text-xl font-bold mb-4'>Lead Details</h2>
         <div className='mb-2'>
           <strong>Name:</strong> {selectedLead?.name}

@@ -53,12 +53,12 @@ export const OpportunitiesProvider = ({
       if (!selectedLead) {
         return
       }
-      // Validate amount
+
       if (oppAmount && isNaN(Number(oppAmount))) {
         setOppError('Amount must be a number')
         return
       }
-      // Create opportunity
+
       setOpportunities((prevState) => [
         ...prevState,
         {
@@ -69,7 +69,7 @@ export const OpportunitiesProvider = ({
           accountName: selectedLead?.company,
         },
       ])
-      // Remove lead from list
+
       setLeads((prevState) =>
         prevState.filter((lead) => lead.id !== selectedLead?.id)
       )

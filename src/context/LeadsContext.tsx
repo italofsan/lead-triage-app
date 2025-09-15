@@ -41,8 +41,9 @@ export const LeadsProvider = ({ children }: { children: ReactNode }) => {
     setItem('leadSortBy', sortBy)
   }, [sortBy])
 
-  useEffect(() => {
+  function getLeads() {
     setLoading(true)
+
     setTimeout(() => {
       fetch('/leads.json')
         .then((response) => {
@@ -58,9 +59,12 @@ export const LeadsProvider = ({ children }: { children: ReactNode }) => {
           setLoading(false)
         })
     }, 2000)
+  }
+
+  useEffect(() => {
+    getLeads()
   }, [])
 
-  // Filtered leads (useMemo)
   const filtered = useMemo(() => {
     let result = leads
     if (search) {
